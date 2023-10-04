@@ -133,4 +133,4 @@ def handle_image(image_data):
 #     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    socketio.run(app, port=5000, allow_unsafe_werkzeug=True)
+    socketio.run(app, host= "0.0.0.0", port=os.environ.get("PORT"), allow_unsafe_werkzeug=True)
