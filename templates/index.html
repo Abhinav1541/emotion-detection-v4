@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Real-time Emotion Recognition</title>
-</head>
-<body>
-    <h1>Real-time Emotion Recognition</h1>
-    <img src="{{ url_for('video_feed') }}" style="width: 100%;"></img>
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Emotion Detection</title>
+  </head>
+  <style>
+    html,
+    body{
+      height: 100%;
+    }
+
+    .no-display{
+      display: none;
+    }
+
+  </style>
+  <body>
+    <h1>Real time video</h1>
+    <video class="no-display" id="videoElement" autoplay></video>
+    <canvas class="no-display" id="canvasElement"></canvas>
+    <div >
+      <img id="imgElement"></img>
+    </div>
+
+    <script
+      src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+      integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const video = document.getElementById("videoElement");
+      const canvas = document.getElementById("canvasElement");
+      canvas.height = 850;
+      canvas.width = 1150;
+      console.log(canvas);
+      const imgElement = document.getElementById("imgElement");
+      const context = canvas.getContext("2d");
+
+      // Establish a WebSocket connection to the server
+      const socket = io({ autoConnect: false });
+      socket.connect();
+
+      // Capture webcam feed
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+        })
+        .catch(function (error) {
+          console.error("Error accessing webcam:", error);
+        });
+
+      // Periodically send video frames to the server
+      video.addEventListener("play", function () {
+        setInterval(function () {
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const imageData = canvas.toDataURL("image/jpeg");
+
+          socket.emit("image", imageData);
+        }, 100);
+      });
+
+      // Receive annotated frames from the server and update the video display
+      socket.on("annotated_frame", function (annotated_frame_data) {
+        imgElement.src = annotated_frame_data;
+      });
+    </script>
+  </body>
 </html>
