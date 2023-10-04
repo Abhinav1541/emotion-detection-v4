@@ -6,21 +6,28 @@
   </head>
   <style>
     html,
-    body{
+    body {
       height: 100%;
     }
 
-    .no-display{
+    .no-display {
       display: none;
     }
 
+    .center-children {
+      text-align: center;
+    }
+
+    #imgElement {
+      display: inline-block; /* Make the image an inline-block element */
+    }
   </style>
   <body>
-    <h1>Real time video</h1>
     <video class="no-display" id="videoElement" autoplay></video>
     <canvas class="no-display" id="canvasElement"></canvas>
-    <div >
-      <img id="imgElement"></img>
+    <div class="center-children">
+      <h1>Real time video</h1>
+      <img id="imgElement" />
     </div>
 
     <script
