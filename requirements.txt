@@ -6,13 +6,16 @@ cachetools==5.3.1
 certifi==2023.7.22
 charset-normalizer==3.3.0
 click==8.1.7
+dnspython==2.4.2
 Flask==3.0.0
 Flask-SocketIO==5.3.6
 flatbuffers==1.12
 gast==0.4.0
+gevent==23.9.1
 google-auth==2.23.2
 google-auth-oauthlib==0.4.6
 google-pasta==0.2.0
+greenlet==3.0.0
 grpcio==1.59.0
 gunicorn==21.2.0
 h11==0.14.0
@@ -54,3 +57,5 @@ Werkzeug==3.0.0
 wrapt==1.15.0
 wsproto==1.2.0
 zipp==3.17.0
+zope.event==5.0
+zope.interface==6.0
