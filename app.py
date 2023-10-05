@@ -78,6 +78,7 @@ def handle_image(image_data):
     image_bytes = base64.b64decode(image_data.split(',')[1])
     image_np = np.frombuffer(image_bytes, dtype=np.uint8)
     frame = cv2.imdecode(image_np, cv2.IMREAD_COLOR)
+    
 
     # Perform emotion detection on 'frame' here
     frame = cv2.flip(frame, 1)
